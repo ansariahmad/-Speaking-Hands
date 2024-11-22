@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Data</title>
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Varela Round', sans-serif;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .navbar {
+            background-color: #5299e4;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand img {
+            height: 50px;
+            width: auto;
+        }
+
+        .navbar-nav {
+            display: flex;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-item {
+            margin-right: 10px;
+        }
+
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #5299e4;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background-color: #0d6ac7;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #5299e4;
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-item {
+                margin-right: 0;
+                margin-bottom: 5px;
+            }
+
+            .nav-link {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a class="navbar-brand" href="#" ><img src="../../static/assets/aa.png" alt="Logo"></a>
+        <div class="navbar-nav">
+            <!-- <button class="nav-link">Overall Statistics</button> -->
+            <a class="nav-link login-btn" href="{% url 'admin_logout' %}" style="color: #e9ecef;">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Container for Table -->
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>UserName</th>
+                    <th>Email</th>
+                    <th>Predictions</th>
+                    <th>Login Statistics</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <!-- Example rows, you can dynamically generate these rows with server-side or client-side scripting -->
+                {%for row in data%}
+                {% if not row.is_superuser%}
+                <tr>
+                    <td>{{row.id}}</td>
+                    <td>{{row.username}}</td>
+                    <td>{{row.email}}</td>
+                    <td><a href="{% url 'view_predictions' row.id %}" class="btn btn-dark"> View </a></td>
+                    <td><a href="{% url 'view_login_stats' row.id %}" class="btn btn-dark"> View </a></td>
+                </tr>
+                {% endif %}
+                {%endfor%}
+                <!-- {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        <a href="{% url 'user_predictions' user.id %}" class="btn-link">View Predictions</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'user_login_statistics' user.id %}" class="btn-link">View Login Statistics</a>
+                    </td>
+                </tr>
+                {% endfor %} -->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

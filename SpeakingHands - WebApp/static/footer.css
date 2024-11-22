@@ -1,0 +1,68 @@
+/* Footer CSS */
+footer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Adjust grid layout */
+  gap: 20px;
+  padding: 20px;
+  background-color: rgba(5, 1, 1, 0.646);
+  margin-top: 1vw;
+}
+
+.links1,
+.links2,
+.links3,
+.links4 {
+  list-style: none;
+  padding: 0;
+  color: white; /* Set color for links */
+}
+
+.links1 h4,
+.links2 h4,
+.links3 h4,
+.links4 h4 {
+  margin-bottom: 10px;
+}
+
+.links1 ul li,
+.links2 ul li,
+.links3 ul li,
+.links4 ul li {
+  padding-top: 10px;
+  line-height: 1.5; /* Adjust line height */
+}
+
+
+
+.social-media,
+.download {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.social-media a,
+.download img {
+  width: 40px; /* Set fixed width */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 50%; /* Make them circular */
+  cursor: pointer;
+}
+
+@media screen and (max-width: 600px) {
+  footer {
+      grid-template-columns: 1fr;
+      gap: 10px;
+      padding: 10px;
+  }
+
+  .social-media,
+  .download {
+      justify-content: center;
+  }
+
+  .social-media a,
+  .download img {
+      margin: 0 5px;
+  }
+}

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Alphabets Testing</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Function to get CSRF token from cookies
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                    // Only send the token to relative URLs i.e. locally.
+                    xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                }
+            }
+        });
+
+        const images = {
+            '1': '../../static/Alphabets/alif.jpg',
+            '2': '../../static/Alphabets/bay.png',
+            '3': '../../static/Alphabets/pay.png',
+            '4': '../../static/Alphabets/tay.png',
+            '5': '../../static/Alphabets/ttay.png',
+            '6': '../../static/Alphabets/say.png',
+            '7': '../../static/Alphabets/chay.png',
+            '8': '../../static/Alphabets/hay.jpg',
+            '9': '../../static/Alphabets/khay.png',
+            '10': '../../static/Alphabets/daal.png/',
+           // '11': '../../static/Signs/Ddaall.jpg',
+            '11': '../../static/Alphabets/ddaal.png',
+            '12': '../../static/Alphabets/zaal.png',
+            '13': '../../static/Alphabets/ray.png',
+            '14': '../../static/Alphabets/zay.png',
+            '15': '../../static/Alphabets/ssaay.png',
+            '16': '../../static/Alphabets/seen.png',
+            '17': '../../static/Alphabets/sheen.png',
+            '18': '../../static/Alphabets/saad.png',
+            '19': '../../static/Alphabets/zuad.png',
+            '20': '../../static/Alphabets/tua.png',
+            '21': '../../static/Alphabets/zua.png',
+            '22': '../../static/Alphabets/aain.png',
+            '23': '../../static/Alphabets/ghain.png',
+            '24': '../../static/Alphabets/fay.png',
+            '25': '../../static/Alphabets/qaaf.png',
+            '26': '../../static/Alphabets/kaaf.jpg',
+            '27': '../../static/Alphabets/gaaf.png',
+            '28': '../../static/Alphabets/laam.png',
+            '29': '../../static/Alphabets/meem.png',
+            '30': '../../static/Alphabets/noon.png',
+            '31': '../../static/Alphabets/wao.png',
+            '32': '../../static/Alphabets/hamzah.png',
+            '33': '../../static/Alphabets/choti_ya.png',
+            '34': '../../static/Alphabets/bari_ya.png',
+            'nothing' : '../../static/Alphabets/default.jpg',
+        };
+
+        // Wait for DOM to be fully loaded
+        $(document).ready(function () {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function (stream) {
+                    var video = document.getElementById('video');
+                    video.srcObject = stream;
+
+                    var canvas = document.getElementById('canvas');
+                    var context = canvas.getContext('2d');
+
+                    setInterval(function () {
+                        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                        var imageData = canvas.toDataURL('image/jpeg');
+                        sendData(imageData);
+                    }, 2000);  // Adjust the interval as needed
+                })
+                .catch(function (error) {
+                    console.error('Error accessing webcam:', error);
+                });
+        });
+
+        function sendData(imageData) {
+            $.ajax({
+                url: '/simple_process_frame/',
+                type: 'POST',
+                data: { 'image_data': imageData },
+                success: function (response) {
+                    displayArray(response['first_array']);
+                }
+            });
+        }
+
+        function displayImage(imagePath) {
+            const imageContainer = document.getElementById('imageContainer');
+            var img = document.createElement('img');
+            img.src = imagePath;
+            img.alt = 'Image';
+            imageContainer.innerHTML = ''; // Clear previous content
+            imageContainer.appendChild(img);
+        }
+
+        function displayArray(firstArray) {
+            var displayDiv = document.getElementById('displayArray');
+            if (displayDiv) {
+                displayDiv.innerHTML = 'First Array: ' + firstArray;
+            } else {
+                console.error('Element with ID displayArray not found');
+            }
+            var imagePath = images[firstArray] || images['nothing'];
+            displayImage(imagePath);
+        }
+    </script>
+
+    <style>
+        .navbar-custom {
+            background-color: #343a40; /* Off-black color */
+        }
+
+        .navbar-custom .nav-link {
+            color: #e9ecef; /* Light color for text */
+        }
+
+        .navbar-custom .dropdown-menu {
+            background-color: #343a40; /* Same off-black for dropdown */
+            color: #e9ecef; /* Light color for text */
+        }
+
+        .navbar-custom .dropdown-item {
+            color: #e9ecef; /* Light color for dropdown items */
+        }
+
+        .navbar-custom .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28233, 236, 239, 1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+
+        #imageContainer {
+            position: absolute;
+            margin-left: 55%;
+            height: 30vw; 
+            width: 30vw; 
+            margin-top: -32vw;
+            margin-bottom: 1vw;
+            border: double;
+            border-color: black;
+            /* overflow: hidden; Ensure image fits inside container */
+        }
+
+        #imageContainer img {
+            max-width: 100%;
+            max-height: 100%;
+            width: 30vw;
+            height: 30vw;
+        }
+
+        .navbar {
+            background-color: #eb38a3;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand img {
+            height: 50px;
+            width: auto;
+        }
+
+        .navbar-nav {
+            display: flex;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-item {
+            margin-right: 10px;
+        }
+
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background-color: #71a0eb;
+            border-radius: 3px;
+        }
+
+        .login-btn {
+            background-color: #5299e4;
+            border-radius: 5px;
+        }
+
+        .login-btn:hover {
+            background-color: #0d6ac7;
+        }
+
+        .collapse {
+            display: flex;
+            flex-basis: auto;
+        }
+
+        .collapse.navbar-collapse {
+            flex-grow: 1;
+            flex-basis: auto;
+        }
+
+        .navbar-toggler {
+            border: none;
+            cursor: pointer;
+            background-color: blue;
+            color: #f0eeee;
+            font-size: 18px;
+        }
+
+        .navbar-toggler:focus {
+            outline: none;
+        }
+
+        @media screen and (max-width: 768px) {
+            .navbar-nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-item {
+                margin-right: 0;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body style="background-image: url('../../static/assets/aaaa.jpg'); background-size: cover;">
+    <!-- Navbar -->
+<!-- Navbar -->
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img src="../../static/assets/aa.png" alt="Logo"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'SignApp' %}" style="color: #e9ecef;">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'test' %}" style="color: #e9ecef;">Learning</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}" style="color: #e9ecef;">Testing</a>
+                </li>
+
+
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'DashBoard' %}" style="color: #e9ecef;">DashBoard</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #e9ecef;">
+                        <img src="../../static/assets/dummy.png" alt="User Image" class="rounded-circle" width="30" height="30">
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="#">
+                            <img src="../../static/assets/dummy.png" alt="User Image" class="rounded-circle" width="100" height="100">
+                            <span>{{ user.username }}</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <form id="logout-form" action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <a class="nav-link login-btn" href="{% url 'updatepass' %}" style="color: #e9ecef; width: 14vw; background-color: #eb38a3; text-align: center;">Update Password</a>
+                            <button type="submit" class="nav-link login-btn" style="color: #e9ecef; width: 14vw; background-color: #eb38a3;">Logout</button>
+                            
+                        </form>
+                    </div>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link login-btn" href="{% url 'login' %}" style="color: #e9ecef;">Login</a>
+                </li>
+                {% endif %}
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- End of Navbar -->
+
+<!-- End of Navbar -->
+
+    <div style="border: 2vw;">
+        <video id="video" width="610" height="460" autoplay style="margin-left: 5%; border-style: double; margin-top: 20px;"></video>
+        <canvas id="canvas" width="800" height="500" style="display: none;"></canvas>
+    </div>
+
+    <div id="displayArray" style="margin-top: 0vw; margin-left: 70%;"></div>
+
+    <div id="imageContainer">
+        <!-- Image will be dynamically displayed here -->
+    </div>
+</body>
+</html>

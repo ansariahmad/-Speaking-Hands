@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Word Testing</title>
+    <!-- <link rel="stylesheet"  type="text/css" href="./styles/style.csscls"> -->
+    <!-- <link rel="stylesheet" href="../../static/navbar.css"> -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap JS and dependencies -->
+
+
+    <style>
+        .body{
+            background-image: url('../../static/assets/loginpic.jpg');
+        }
+
+
+        /* Add CSS styles for imageContainer */
+        .navbar-custom {
+            background-color: #343a40; /* Off-black color */
+        }
+
+        .navbar-custom .nav-link {
+            color: #e9ecef; /* Light color for text */
+        }
+
+        .navbar-custom .dropdown-menu {
+            background-color: #343a40; /* Same off-black for dropdown */
+            color: #e9ecef; /* Light color for text */
+        }
+
+        .navbar-custom .dropdown-item {
+            color: #e9ecef; /* Light color for dropdown items */
+        }
+
+        .navbar-custom .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28233, 236, 239, 1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+
+        #imageContainer {
+            margin-left: 52%;
+            height: 28vw; 
+            width: 28vw; 
+            margin-top: -27vw;
+            margin-bottom: 1vw;
+            border: double;
+            border-color: black;
+        }
+
+        #imageContainer img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+        }
+
+        .navbar {
+            background-color: #eb38a3;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand img {
+            height: 50px;
+            width: auto;
+        }
+
+        .navbar-nav {
+            display: flex;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-item {
+            margin-right: 10px;
+        }
+
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background-color: #71a0eb;
+            border-radius: 3px;
+        }
+
+        .login-btn {
+            background-color: #5299e4;
+            border-radius: 5px;
+        }
+
+        .login-btn:hover {
+            background-color: #0d6ac7;
+        }
+
+        .collapse {
+            display: flex;
+            flex-basis: auto;
+        }
+
+        .collapse.navbar-collapse {
+            flex-grow: 1;
+            flex-basis: auto;
+        }
+
+        .navbar-toggler {
+            border: none;
+            cursor: pointer;
+            background-color: blue;
+            color: #f0eeee;
+            font-size: 18px;
+        }
+
+        .navbar-toggler:focus {
+            outline: none;
+        }
+
+        @media screen and (max-width: 768px) {
+            .navbar-nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-item {
+                margin-right: 0;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body style="background-image: url('../../static/assets/loginpic.jpg'); background-size: cover;">
+    <!-- Navbar -->
+    <!-- Navbar -->
+<!-- Navbar -->
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img src="../../static/assets/aa.png" alt="Logo"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'SignApp' %}" style="color: #e9ecef;">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'test' %}" style="color: #e9ecef;">Learning</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#services" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #e9ecef;">
+                        Testing
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'index' %}">Alphabets</a>
+                        <a class="dropdown-item" href="{% url 'video' %}">Words</a>
+                    </div>
+                </li>
+
+
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'DashBoard' %}" style="color: #e9ecef;">DashBoard</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #e9ecef;">
+                        <img src="../../static/assets/dummy.png" alt="User Image" class="rounded-circle" width="30" height="30">
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="#">
+                            <img src="../../static/assets/dummy.png" alt="User Image" class="rounded-circle" width="100" height="100">
+                            <span>{{ user.username }}</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <form id="logout-form" action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <a class="nav-link login-btn" href="{% url 'updatepass' %}" style="color: #e9ecef; width: 14vw; background-color: #eb38a3; text-align: center;">Update Password</a>
+                            <button type="submit" class="nav-link login-btn" style="color: #e9ecef; width: 14vw; background-color: #eb38a3;">Logout</button>
+                            
+                        </form>
+                    </div>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link login-btn" href="{% url 'login' %}" style="color: #e9ecef;">Login</a>
+                </li>
+                {% endif %}
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- End of Navbar -->
+
+<!-- End of Navbar -->
+
+    <!-- <h1>Perform signs in front of camera</h1> -->
+    <div style="border: 2vw;">
+        <video id="video" width="500" height="350" autoplay style="margin-left: 5%; border-style: double; margin-top: 20px;"></video>
+        <canvas id="canvas" width="800" height="500" style="display: none;"></canvas>
+    </div>
+
+    <!-- <div id="displayArray" style="margin-top: 0vw; margin-left: 70%;"></div> -->
+
+    <div id="imageContainer">
+        <!-- Image will be dynamically displayed here -->
+    </div>
+
+    <script>
+        const images = {
+            '1': '../../static/Signs/Aliff.jpg',
+            '2': '../../static/Signs/Bayy.jpg',
+            '3': '../../static/Signs/Payy.jpg',
+            '4': '../../static/Signs/Tayy.jpg',
+            '5': '../../static/Signs/Ttayy.jpg',
+            '6': '../../static/Signs/Sayy.jpg',
+            '7': '../../static/Signs/Chayy.jpg',
+            '8': '../../static/Signs/Hayy.jpg',
+            '9': '../../static/Signs/Khayy.jpg',
+            '10': '../../static/Signs/Daall.jpg',
+            // '11': '../../static/Signs/Ddaall.jpg',
+            '11': '../../static/Signs/Zaall.jpg',
+            '12': '../../static/Signs/Rayy.jpg',
+            '13': '../../static/Signs/Rrayy.jpg',
+            '14': '../../static/Signs/Zayy.jpg',
+            '15': '../../static/Signs/Ssayy.jpg',
+            '16': '../../static/Signs/Seenn.jpg',
+            '17': '../../static/Signs/Sheenn.jpg',
+            '18': '../../static/Signs/Suadd.jpg',
+            '19': '../../static/Signs/Zuadd.jpg',
+            '20': '../../static/Signs/Tuaa.jpg',
+            '21': '../../static/Signs/Zuaa.jpg',
+            '22': '../../static/Signs/Aainn.jpg',
+            '23': '../../static/Signs/Ghain.jpg',
+            '24': '../../static/Signs/Fayy.jpg',
+            '25': '../../static/Signs/Qaaff.jpg',
+            '26': '../../static/Signs/Kaaff.jpg',
+            '27': '../../static/Signs/Gaaff.jpg',
+            '28': '../../static/Signs/Laamm.jpg',
+            '29': '../../static/Signs/Meemm.jpg',
+            '30': '../../static/Signs/Noonn.jpg',
+            '31': '../../static/Signs/Waoo.jpg',
+            '32': '../../static/Signs/Hamzah.jpg',
+            '33': '../../static/Signs/Choti_yaa.jpg',
+            '34': '../../static/Signs/Bari_yaa.jpg',
+            'nothing': '../../static/Signs/mam.jpg'
+        };
+
+        // Function to get CSRF token from cookies
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        // Set up CSRF token for AJAX requests
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                    xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                }
+            }
+        });
+
+        // Wait for DOM to be fully loaded
+        $(document).ready(function () {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function (stream) {
+                    var video = document.getElementById('video');
+                    video.srcObject = stream;
+
+                    var canvas = document.getElementById('canvas');
+                    var context = canvas.getContext('2d');
+
+                    setInterval(function () {
+                        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                        var imageData = canvas.toDataURL('image/jpeg');
+                        sendData(imageData);
+                    }, 1000);  // Adjust the interval as needed
+                })
+                .catch(function (error) {
+                    console.error('Error accessing webcam:', error);
+                });
+        });
+
+        function sendData(imageData) {
+            $.ajax({
+                url: '/process_video_frame/',
+                type: 'POST',
+                data: { 'image_data': imageData },
+                success: function (response) {
+                    console.log(response['first_array'])
+                    // displayArray(response['first_array']);
+                }
+            });
+        }
+
+        function displayImage(imagePath) {
+            const imageContainer = document.getElementById('imageContainer');
+            var img = document.createElement('img');
+            img.src = imagePath;
+            img.alt = 'Image';
+            imageContainer.innerHTML = ''; // Clear previous content
+            imageContainer.appendChild(img);
+        }
+
+        function displayArray(firstArray) {
+            var displayDiv = document.getElementById('displayArray');
+            displayDiv.innerHTML = 'First Array: ' + firstArray;
+            var imagePath = images[firstArray] || images['nothing']; // If image path not found, use placeholder image
+            displayImage(imagePath);
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

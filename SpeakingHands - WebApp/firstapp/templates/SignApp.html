@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Varela Round' rel='stylesheet'>
+    <title>SignSpeak</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/footer.css">
+    <link rel="stylesheet" href="../../static/SignApp.css">
+    
+    <style>
+        /* a:hover {
+            font-weight: bold;
+            color: rgb(6, 6, 235);
+        } */
+
+            
+.navbar-brand img {
+    max-height: 50px; /* Adjust as needed */
+}
+
+.navbar-nav .nav-item .nav-link {
+    color: #000; /* Adjust text color */
+}
+
+.dropdown-menu {
+    background-color: #1f1c1c94; /* Adjust background color */
+    box-shadow: 0px 8px 16px 0px rgba(28, 6, 6, 0.2);
+}
+
+.dropdown-item {
+    color: #eadddb; /* Adjust dropdown item text color */
+    padding: 12px 16px;
+}
+
+
+        .navbar {
+            background-color: #eb38a3;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand img {
+            height: 50px;
+            width: auto;
+        }
+
+        .navbar-nav {
+            display: flex;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-item {
+            margin-right: 10px;
+        }
+
+        .nav-link {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background-color: #71a0eb;
+            border-radius: 3px;
+        }
+
+        .login-btn {
+            background-color: #5299e4;
+            border-radius: 5px;
+        }
+
+        .login-btn:hover {
+            background-color: #0d6ac7;
+        }
+
+        .collapse {
+            display: flex;
+            flex-basis: auto;
+        }
+
+        .collapse.navbar-collapse {
+            flex-grow: 1;
+            flex-basis: auto;
+        }
+
+        .navbar-toggler {
+            border: none;
+            cursor: pointer;
+            background-color: blue;
+            color: #f0eeee;
+            font-size: 18px;
+        }
+
+        .navbar-toggler:focus {
+            outline: none;
+        }
+
+        @media screen and (max-width: 768px) {
+            .navbar-nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-item {
+                margin-right: 0;
+                margin-bottom: 5px;
+            }
+        }
+
+
+        a {
+            text-decoration: none;
+            color: rgb(64, 11, 236);
+            font-size: 16px;
+            transition: font-weight 0.3s, color 0.3s;
+        }
+        a:hover {
+            font-weight: bold;
+            color: rgb(6, 6, 235);
+        }
+
+
+
+    </style>
+
+
+</head>
+
+<body>
+    <!-- Navbar -->
+<!-- Navbar -->
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img src="../../static/assets/aa.png" alt="Logo"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'SignApp' %}" style="color: #e9ecef;">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'test' %}" style="color: #e9ecef;">Learning</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}" style="color: #e9ecef;">Testing</a>
+                </li>
+
+
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'DashBoard' %}" style="color: #e9ecef;">DashBoard</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #e9ecef;">
+                        <img src="../../static/assets/dummy.png" alt="User Image" class="rounded-circle" width="30" height="30">
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="#">
+                            <img src="../../static/assets/dummy.png" alt="User Image" class="rounded-circle" width="100" height="100">
+                            <span>{{ user.username }}</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <form id="logout-form" action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <a class="nav-link login-btn" href="{% url 'updatepass' %}" style="color: #e9ecef; width: 14vw; background-color: #eb38a3; text-align: center;">Update Password</a>
+                            <button type="submit" class="nav-link login-btn" style="color: #e9ecef; width: 14vw; background-color: #eb38a3;">Logout</button>
+                            
+                        </form>
+                    </div>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link login-btn" href="{% url 'login' %}" style="color: #e9ecef;">Login</a>
+                </li>
+                {% endif %}
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- End of Navbar -->
+
+<!-- End of Navbar -->
+
+
+    <div class="login-form-container" style="display: none;">
+        <div id="login-form"></div>
+    </div>
+
+    <!-- Background Image -->
+    <div class="background">
+
+    </div>
+
+    <!-- Content -->
+    <div class="container">
+        <h1 style="text-align: center;font-size: 4vw;">About Sign Language</h1>
+    </div>
+    
+    <div>
+          <div>
+            <div class="first">
+            <p style="margin-top :3vw;">Sign languages (also known as signed languages) are languages that use the visual-manual
+             modality to convey meaning, instead of spoken words. Sign languages are expressed through 
+             manual articulation in combination with non-manual markers. Sign languages are full-fledged 
+             natural languages with their own grammar and lexicon. Sign languages are not universal 
+             and are usually not mutually intelligible, although there are also similarities among 
+             different sign languages.</p>
+    
+             <p>Dumb and  deaf people face  great difficulty while  interactingwith normal people. As 
+              the hearing impaired ordeaf people cannot talk like normal people, so they aredependent
+            on a kind of visual communication most of thetimes. A sign language is a way of communication
+            thatuses visual modality instead of acoustic sound patterns  forexchanging information.
+            People  with hearing  and speechimpairment  use different  sign and gestural languages 
+            intheir daily face-to-face communication. </p></div>
+        <img src="../../static/assets/signs.jpg" style="width: 50%; margin-left :48%; margin-top :-35vw;margin-right: 1vw; border: 2px black;">
+    
+            </div>
+    
+    
+            <div>
+            <img src="../../static/assets/login.jpg" style="width: 30%; margin-right:69%;  margin-left:1vw; border: 2px black;"/>
+            <div style="font-size:1.3vw; margin-left:1vw; margin-top:-20vw; margin-left:32vw;">
+            {% comment %} <div style="margin-left:32vw; margin-top:-17vw"> {% endcomment %}
+            <p style="margin-top="-2vw";>There are differentmutually unintelligible 
+            sign languages around the world,because the languages were developed independently 
+            ofother deaf communities. American Sign Language, BritishSign Language, French Sign 
+            Language, Australian SignLanguage and many others have developed in various 
+            deafcommunities. Similarly, Pakistan Sign Language(PSL) isdeveloped in Pakistan by 
+            the deaf and dumb communitywhich has its own vocabulary and syntax. </p>
+            
+    
+            <p>Sign language is a way of communication among deaf communities. The sign language consists of 
+            dynamic or static hand configuration.</p>
+            
+             
+             <p>
+                <p">Sign alphabets are based on static hand poses 
+            which represent the letters of the alphabets and it uses gestures besides verbal communication. 
+            However, in the existing system, deaf people face a major problem to communicate with non-deaf </p>
+        </div>
+        <div style="font-size:1.3vw; margin-left:1vw; margin-right: 17%;">
+        <p>people through sign language because non-deaf people do not 
+                        understand it. The advancement in computer vision enables us to produce some complex models 
+                        that can recognize the sign, hand configuration, and translate it into text and voice. 
+                        These models require a dataset to get trained. However, the dataset of Pakistan sign language
+                         (Urdu) is not available publicly.</p>
+                </div>
+                <div>
+              <h1  style="font-family: 'Varela Round';font-size: 30px; color: blue; font-weight: bold; text-decoration: underline;">Android App</h1>
+            <p style="margin-right: 17%; font-size: 1.3vw; margin-left:1vw;">Our mobile application is a dedicated effort to promote and preserve the beauty of Urdu Sign
+               Language alphabets. With a focus on inclusivity, our app provides an accessible platform for 
+               individuals to learn and understand this unique form of communication. Through a user-friendly
+                interface, users can explore the intricacies of Urdu Sign Language alphabets, fostering a 
+                deeper connection to this culturally rich expression. This initiative is an integral part 
+                of our broader project, aiming to bridge communication gaps and celebrate linguistic 
+                diversity. Join us in this journey as we empower individuals to communicate effectively 
+                through the universal language of signs.</p>
+              <img src="../../static/assets/app.jpg" style="height: 25vw; margin-left: 85%; margin-right: 1vw; margin-top:-21vw; margin-bottom:1vw"/>
+                </div>
+             </div>
+             </div> 
+        </div>
+    </div>
+    <div class="container" style="display: flex; justify-content: space-around;">
+        <div class="block" style="text-align: center; border: 2px solid black; border-style: double; padding: 20px; height: 19vw; margin-bottom: 5px; flex: 1;">
+            <h1 class="block-heading" style="font-family: 'Varela Round'; font-size: 30px; color: blue; font-weight: bold; text-decoration: underline; margin-top: -10px;">Instructors</h1>
+            <div class="gallery" style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap;">
+                <div class="gallery-item" style="text-align: center; margin-bottom: 20px;">
+                    <img src="../../static/assets/prof.jpg" alt="supervisor" style="width: 150px; height: 150px; border: 2px solid black; border-style: double;">
+                    <div><a href="https://staff.uet.edu.pk/profile/765" target="_blank">Shahid Islam</a></div>
+                </div>
+                <div class="gallery-item" style="text-align: center; margin-bottom: 20px;">
+                    <img src="../../static/assets/mamm.jpeg" alt="co-supervisor" style="width: 150px; height: 150px; border: 2px solid black; border-style: double;">
+                    <div><a href="https://staff.uet.edu.pk/profile/973" target="_blank">Natasha Nigar</a></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="block" style="text-align: center; border: 2px solid black; border-style: double; padding: 20px; height: 19vw; margin-bottom: 5px; flex: 1;">
+            <h1 class="block-heading" style="font-family: 'Varela Round'; font-size: 30px; color: blue; font-weight: bold; text-decoration: underline; margin-top: -10px;">Contributors</h1>
+            <div class="gallery" style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap;">
+                <div class="gallery-item" style="text-align: center; margin-bottom: 20px;">
+                    <img src="../../static/assets/talha.jpeg" alt="talha" style="width: 150px; height: 150px; border: 2px solid black; border-style: double;">
+                    <div><a href="#">Ahmad Talha</a></div>
+                </div>
+                <div class="gallery-item" style="text-align: center; margin-bottom: 20px;">
+                    <img src="../../static/assets/Muzammil.png" alt="muzammil" style="width: 150px; height: 150px; border: 2px solid black; border-style: double;">
+                    <div><a href="#">Muhammad Muzammil</a></div>
+                </div>
+                <div class="gallery-item" style="text-align: center; margin-bottom: 20px;">
+                    <img src="../../static/assets/adil.jpg" alt="adil" style="width: 150px; height: 150px; border: 2px solid black; border-style: double;">
+                    <div><a href="#">Adil Yusuf</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+<footer>
+    <div className="links1">
+        <ul>
+            <h4>Our Company</h4>
+            <li>
+                <a href="" style="color: #f3f0f2;">Our Community</a>
+            </li>
+
+            <li>
+                <a href="" style="color: #f3f0f2;">Our Histroy</a>
+            </li>
+        </ul>
+    </div>
+
+    <div className="links2" style="margin-left: 25%; margin-right: 70%; margin-top: -0vw; position: absolute;">
+        <ul>
+            <h4>Careers</h4>
+            <li>
+                <a href="" style="color: #f3f0f2;">Corprate</a>
+            </li>
+
+            <li>
+                <a href="" style="color: #f3f0f2;">Related Work</a>
+            </li>
+        </ul>
+    </div>
+
+    <div className="links3" style="margin-left: 50%; margin-right: 40%; margin-top: 0vw; position: absolute;">
+        <ul>
+            <h4>Contact us</h4>
+            <li>
+                <a href="" style="color: #f3f0f2;">Suggestion</a>
+            </li>
+
+            <li>
+                <a href="" style="color: #f3f0f2;">Complaint</a>
+            </li>
+        </ul>
+    </div>
+
+    <div className="links4" style="margin-left: 70%; margin-right: 15%; margin-top: 0vw; position: absolute;">
+        <ul>
+            <h4>News Room</h4>
+            <li>
+                <a href="" style="color: #f3f0f2;">Local</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class='social-media' style="margin-left: 50vw;  margin-top: 10vw; position: absolute;" >
+        <a href='https://www.facebook.com/'>
+            <img src="../../static/assets/fb.jpg" alt="" style="height: 2vw; width: 2vw"/>
+        </a>
+
+        <a href='https://www.youtube.com/'>
+        <img src="../../static/assets/yt.jpg" alt="" style="height:2vw; width: 2vw"/>
+
+        </a>
+        
+        
+        <a href='https://www.linkedin.com/'>
+        <img src="../../static/assets/li.jpg" alt="" style="height: 2vw; width: 2vw" />
+
+        </a>
+
+        <a href='https://www.tiktok.com/'>
+        <img src="../../static/assets/tt.jpg" alt="" style="height: 2vw; width: 2vw"/></a>
+    </div>
+
+
+</footer>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

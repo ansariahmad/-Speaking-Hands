@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chart.js Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Chart Container -->
+    <canvas id="myChart" width="400" height="400"></canvas>
+
+    <!-- JavaScript to create the chart -->
+    <script>
+        // Get the context of the canvas element we want to select
+        var ctx = document.getElementById('myChart').getContext('2d');
+
+        // Create the chart
+        var myChart = new Chart(ctx, {
+            type: 'bar',  // Specify the type of chart
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],  // Labels for the x-axis
+                datasets: [{
+                    label: 'Monthly Sales',  // Name of the dataset
+                    data: [12, 19, 3, 5, 2, 3, 7],  // Data points
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',  // Background color for bars
+                    borderColor: 'rgba(75, 192, 192, 1)',  // Border color for bars
+                    borderWidth: 1  // Width of the bar borders
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true  // Start the y-axis at 0
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

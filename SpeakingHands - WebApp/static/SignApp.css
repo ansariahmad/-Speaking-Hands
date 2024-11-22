@@ -1,0 +1,21 @@
+ /* Background */
+ .background {
+    background-image: url('assets/heroimg.png');
+    display: flex;
+    background-size: cover;
+    height: 80vh;
+    ; /* Adjust as per your image */
+}
+
+
+
+.first{
+    margin-right: 52%;
+    font-size: 1.3vw;
+    margin-top :2vw;
+    margin-left :1vw;
+}
+
+
+
+

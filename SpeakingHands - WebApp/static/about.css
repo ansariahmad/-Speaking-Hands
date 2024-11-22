@@ -1,0 +1,40 @@
+body {
+    background-color: #f5f5f5;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.card {
+    width: calc(100% - 40px);
+    max-width: 500px;
+    border: 2px solid #141a14;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.image {
+    width: 50%;
+    height: auto;
+    float: left;
+}
+
+.text {
+    width: 50%;
+    float: right;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.text h2 {
+    margin-top: 0;
+}
+
+.text p {
+    margin-bottom: 0;
+}
